@@ -1,0 +1,7 @@
+---
+
+- name: Debug hostname
+  hosts: cisco
+  tasks:
+    - debug:
+        msg: "{{ ansible_host }}"    
