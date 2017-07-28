@@ -2,7 +2,6 @@
 
 - name: Local ping
   hosts: local
-  remote_user: thombre
   tasks:
     - ping:
 - name: Cisco ping
