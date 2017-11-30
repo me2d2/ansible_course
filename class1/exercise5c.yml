@@ -1,0 +1,7 @@
+---
+
+- name: Host Vars
+  hosts: cisco
+  tasks:
+    - debug:
+        msg: "{{ remote_as_number }}"         

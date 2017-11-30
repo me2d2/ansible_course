@@ -1,0 +1,7 @@
+---
+
+- name: Group Vars
+  hosts: cisco
+  tasks:
+    - debug:
+        msg: "{{ local_as_number }}"  

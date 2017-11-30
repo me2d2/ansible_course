@@ -1,0 +1,9 @@
+---
+dairy: milk
+grain: bread
+beverage: juice
+fruit:
+  - apples
+  - oranges
+  - bananas
+  - grapes
