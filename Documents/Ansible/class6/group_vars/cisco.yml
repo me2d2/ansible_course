@@ -1,0 +1,15 @@
+---
+
+creds:
+  hostname: "{{ ansible_host }}"
+  username: "{{ username }}"
+  password: "{{ password }}"
+  dev_os: "ios" # napalm device type
+  
+creds_secret:
+  hostname: "{{ ansible_host }}"
+  username: test9
+  password: "{{ password }}"
+  dev_os: "ios" # napalm device type  
+  optional_args:
+    secret: "{{ password }}"

@@ -1,0 +1,43 @@
+---
+
+# Construct a playbook using the ‘ios_facts’ module to connect to the two Cisco routers. 
+# Using multiple debug tasks print out the following variables given the specified constraint 
+# a. ansible_net_all_ipv4_addresses [when the IP address is 10.220.88.21]
+# b. ansible_net_interfaces  [only print out the interface names]  need qualifier that item will print out other junk, but in the 'msg' field.
+# c. ansible_net_interfaces [only print out the interface names that are up]
+# d.  ansible_net_model [only when the model is a 881]
+
+- name: Class2 Ex2
+  gather_facts: no
+  hosts: cisco
+  tasks:
+    - name: IOS Facts
+      ios_facts: 
+         provider: "{{ creds }}"
+      tags:
+       - ex2a
+       - ex2b
+       - ex2c
+       - ex2d   
+    - name: IPv4 Addresses    
+      debug:
+        var: ansible_net_all_ipv4_addresses    
+      when: ansible_net_all_ipv4_addresses[0] == "10.220.88.21"  
+      tags: ex2a
+    - name: Interfaces   
+      debug:  
+        msg: "{{ item.key }}"
+      with_dict: "{{ ansible_net_interfaces }}"  
+      tags: ex2b
+    - name: Only Up Interfaces   
+      debug:  
+        msg: "Active: {{ item.key }}"
+      with_dict: "{{ ansible_net_interfaces }}" 
+      when: item.value.lineprotocol == 'up'
+      tags: ex2c
+    - name: Model 881  
+      debug:  
+        var: ansible_net_model
+      when: "'881' in ansible_net_model"
+      tags: ex2d                      
+

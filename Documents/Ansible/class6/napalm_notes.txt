@@ -1,0 +1,5 @@
+# NAPALM is a Python lib that allows you to create a standard set of ops across a range of platforms
+# Config Ops and Getter Ops (queries)
+# NAPALM Vendors-
+# Core: EOS, IOS, IOS-XR, NX-OS, JunOS
+# Community: Fortinet Fortios, Mikrotik RouterOS, Palo Alto NOS, Pluribus, VyOS

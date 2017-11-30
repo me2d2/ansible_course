@@ -1,0 +1,28 @@
+---
+
+#1. Use the nxos_vlan module to configure the following VLANs:
+
+- name: Class3 Ex1
+  hosts: nxos
+  tasks:
+    - nxos_facts:
+        provider: "{{ provider_ssh }}"
+    - nxos_facts:
+        provider: "{{ provider_nxapi }}"
+        
+    -  name: Configure NEXUS VLANs
+       nxos_vlan:
+         provider: "{{ provider_nxapi }}"
+         vlan_id: "{{ item.vlan_id }}"
+         admin_state: "{{ item.admin_state }}" 
+         name: "{{ item.name }}"       
+       with_items: "{{ vlans }}"
+       notify: Write Mem #implements a handler if the task causes a change
+# to confirm configuration worked execute $ netmiko-show --cmd "show vlan" nxos  
+  handlers:
+    -  name: Write Mem
+       nxos_command: # displays as a non change execution because this module is viewed as show
+         provider: "{{ provider_ssh }}"
+         commands: copy run start
+       changed_when: True #flags as a change  
+       tags: wr_mem       

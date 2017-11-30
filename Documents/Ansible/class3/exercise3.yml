@@ -1,0 +1,15 @@
+---
+
+#3. Use the nxos_ping module to verify the IPv4 communication between the two switches.
+
+- name: Class3 Ex3
+  hosts: nxos
+  gather_facts: no
+  tasks:
+    - name: Ping IPv4
+      nxos_ping:
+        provider: "{{ provider_ssh }}"      
+        dest: "{{ item.ip_four }}" 
+        vrf: default
+      with_items: "{{ ip_addresses }}"
+      when: item.type == 'v4'        

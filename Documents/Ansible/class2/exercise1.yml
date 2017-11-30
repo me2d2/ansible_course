@@ -1,0 +1,11 @@
+---
+
+# Construct a playbook using the ‘ios_facts’ module to connect to the two Cisco routers. Use the
+# debug module to print out the two serial numbers.
+
+- name: Class2 Ex1
+  hosts: cisco
+  tasks:
+    - name: IOS Facts serials
+      ios_facts:
+         provider: "{{ creds }}"

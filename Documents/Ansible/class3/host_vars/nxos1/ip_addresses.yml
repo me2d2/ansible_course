@@ -1,0 +1,11 @@
+---
+
+# Where X.X is some random network in the 10-net
+# Where :XXXX: is some random IPv6 hex digits
+# nxos1:    IPv4: 10.X.X.1/24
+#           IPv6: 2001::db8:XXXX:200c:1/64
+
+ip_addresses:
+   ip_four: 10.10.10.1
+   ip_six: 2001::db8:ac10:200c:1
+

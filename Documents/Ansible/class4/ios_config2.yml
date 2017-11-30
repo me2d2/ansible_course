@@ -1,0 +1,28 @@
+---
+
+- name: IOS Config
+  gather_facts: no
+  hosts: pynet-rtr1
+  vars:
+    creds:
+      host: "{{ ansible_host }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+  tasks:
+    - name: Configure ACL
+      ios_config:
+        provider: "{{ creds }}"
+        parents: ["ip access-list extended TEST-ACL"] #lines have to be in this grouping
+        lines:
+          - permit ip host 1.1.1.1 any log
+          - permit ip host 2.2.2.2 any log
+          - permit ip host 3.3.3.3 any log
+          - permit ip host 4.4.4.4 any log
+          - permit ip host 5.5.5.5 any log
+        #when change detected execute before, followed by parent  
+        before: ["no ip access-list extended TEST-ACL"]
+        #the above parent/before run can be verified using netmiko-show --cmd "show access-list TEST-ACL" pynet-rtr1 
+        replace: block #can also use replace: line, as block will always add all the lines, line for only those missing
+        match: line #will not care about order and additional lines, just existence
+        #want certain order with no additional lines, use match: exact
+        #match: strict is not entirely useful in practice       

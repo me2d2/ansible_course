@@ -1,0 +1,35 @@
+---
+
+# Construct a playbook using the 'ios_command' module that executes ‘show arp’ on the two Cisco routers. ‘Register’ the output of ‘show arp’ and save this output to a show_arp variable. Print the show_arp variable to standard output.
+# a. From this show_arp output create a new variable using the 'set_fact' module (show_arp_new). This new variable should be equal to show_arp.stdout_lines[0]
+# b. Add a task to print this new variable 'show_arp_new' to the screen.
+# c. Add a new task to only print out the '10.220.88.1' line from the show_arp_new output (use with_items and when to accomplish this).
+
+- name: Class2 Ex3
+  gather_facts: no
+  hosts: cisco
+  tasks:
+    - name: IOS Facts
+      ios_facts:
+        provider: "{{ creds }}" 
+    - name: ARP        
+      ios_command:
+        provider: "{{ creds }}"      
+        commands: show arp
+      register: show_arp
+    - name: ARP Output  
+      debug:
+        msg: "{{ show_arp.stdout }}"
+    - name: New Variable
+      set_fact:
+         show_arp_new: "{{ show_arp.stdout_lines[0] }}"
+    - name: New Var Print
+      debug:
+        var: show_arp_new            
+    - name: Selective Output
+      debug:
+        var: item
+      with_items: "{{ show_arp_new }}"
+      when:  " '10.220.88.1' in item "
+        
+      

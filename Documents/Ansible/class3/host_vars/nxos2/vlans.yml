@@ -1,0 +1,22 @@
+---
+#nxos2:     VLAN301 name blue
+#           VLAN302 name red
+#           VLAN303 name green
+#           VLAN305 name orange
+#           VLAN306 name gray
+vlans_unique:
+  - vlan_id: 301
+    admin_state: up
+    name: BLUE
+  - vlan_id: 302
+    admin_state: up
+    name: RED
+  - vlan_id: 303
+    admin_state: up
+    name: GREEN
+  - vlan_id: 305
+    admin_state: up
+    name: ORANGE            
+  - vlan_id: 306
+    admin_state: up
+    name: GRAY

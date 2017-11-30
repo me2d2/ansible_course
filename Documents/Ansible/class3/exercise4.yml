@@ -1,0 +1,6 @@
+---
+
+# 4. Use the nxos_snmp_location and the nxos_snmp_contact modules to configure an SNMP location and an SNMP contact on the two NXOS switches. 
+# Use a handler and the nxos_command module to cause 'copy run start' to execute if any configuration changes occur.
+
+

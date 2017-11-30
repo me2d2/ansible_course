@@ -1,0 +1,8 @@
+ssh:
+   host: "{{ ansible_host }}"
+   username: "{{ username }}"
+   password: "{{ password }}"
+   # to use ssh on arista
+   transport: cli
+   # because env is slower
+   timeout: 60

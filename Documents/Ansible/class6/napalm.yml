@@ -1,0 +1,9 @@
+---
+
+- name: Napalm Ping
+  hosts: cisco
+  tasks:
+    - name: Napalm ping
+      napalm_ping:
+        provider: "{{ creds }}"
+        destination: 10.220.88.1 # the default gateway

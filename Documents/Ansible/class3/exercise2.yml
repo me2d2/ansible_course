@@ -1,0 +1,39 @@
+------
+
+#2. Use the nxos_ip_interface module to configure the below IP addresses. 
+#Use a handler and the nxos_command module to cause 'copy run start' to execute if any configuration changes occur.
+
+- name: Class3 Ex2
+  hosts: nxos
+  tasks:
+    - nxos_facts:
+        provider: "{{ provider_ssh }}"
+    - nxos_facts:
+        provider: "{{ provider_nxapi }}"
+        
+    -  name: IPv4 Interface #will config on both nxos1 and nxos2
+       nxos_ip_interface:
+         provider: "{{ provider_nxapi }}"
+         interface: Ethernet2/1
+         version: v4     
+         addr: "{{ ip_four }}"
+         mask: 24
+       notify: Write Mem #implements a handler if the task causes a change
+# to confirm execute $ netmiko-show --cmd "show run int eth 2/1" nxos
+
+    -  name: IPv6 Interface #will config on both nxos1 and nxos2
+       nxos_ip_interface:
+         provider: "{{ provider_ssh }}"
+         interface: Ethernet2/1
+         version: v6     
+         addr: "{{ ip_six }}"
+         mask: 64
+       notify: Write Mem
+          
+  handlers:
+    -  name: Write Mem
+       nxos_command: # displays as a non change execution because this module is viewed as show
+         provider: "{{ provider_ssh }}"
+         commands: copy run start
+       changed_when: True #flags as a change  
+       tags: wr_mem 

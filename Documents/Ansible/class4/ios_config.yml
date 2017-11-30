@@ -1,0 +1,30 @@
+---
+
+- name: IOS Config
+  hosts: pynet-rtr1
+  vars:
+    creds:
+      host: "{{ ansible_host }}"
+      #if not called through creds, ansible-playbook playbook.yml -i ./ansible-hosts -u username (pyclass in this case) -k
+      username: "{{ username }}"
+      password: "{{ password }}"
+  tasks:
+    - ios_facts:
+        provider: "{{ creds }}"
+      tags: facts_only
+    - ios_config:
+        provider: "{{ creds }}"
+        # can call all the following from a .txt file in the same directory as the playbook using src: my_file.txt
+        backup: yes #this will create a config backup before changes occur, placed in backup dir with timestamp
+        lines: # what lines to config, by default global config items
+          - "ip domain name {{ default_domain }}"
+          #names are set below but will not provide DNS lookups so pings will fail
+          - "ip name-server {{ name_server1 }}"
+          - "ip name-server {{ name_server2 }}"
+          - "ntp server {{ ntp1 }}"
+          - "ntp server {{ ntp2 }}"
+          #this will provide ping availability, will run as change every time
+          - "ip domain-lookup"  
+                  
+            
+                               

@@ -1,0 +1,15 @@
+---
+
+- name: W5 E1 Parsing
+  hosts: 
+  vars:
+    network_devices:
+      - "{{ hostname}}" 
+      - "{{ ip }}"
+      - "{{ model }}"
+      - "{{ vendor }}"
+      - "{{ device_type }}" 
+  tasks:
+    - name: Parse CDP
+      with_dict: network_devices
+      
